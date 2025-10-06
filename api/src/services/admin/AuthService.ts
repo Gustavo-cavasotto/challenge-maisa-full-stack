@@ -12,13 +12,11 @@ class AuthService {
     async execute({ email, password }: AuthRequest){
         const user = await new AdminRepository().findByEmail(email);
         if (!user){
-            console.log("User/password incorrect");
             throw new AuthenticationError("Usuário ou senha incorretos");
         }
 
         const passwordMatch = await compare(password, user.password);
-        if (!passwordMatch){''
-            console.log("User/password incorrect");
+        if (!passwordMatch){
             throw new AuthenticationError("Usuário ou senha incorretos");
         }
 
@@ -30,7 +28,8 @@ class AuthService {
         const token = sign(
             {
                 name: user.name,
-                email: user.email
+                email: user.email,
+                is_admin: user.is_admin
             },
             secret,
             {
