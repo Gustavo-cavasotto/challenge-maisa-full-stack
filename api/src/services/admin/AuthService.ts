@@ -9,8 +9,10 @@ interface AuthRequest {
 }   
 
 class AuthService {
+    constructor(private adminRepository: AdminRepository) {}
+
     async execute({ email, password }: AuthRequest){
-        const user = await new AdminRepository().findByEmail(email);
+        const user = await this.adminRepository.findByEmail(email);
         if (!user){
             throw new AuthenticationError("Usuário ou senha incorretos");
         }

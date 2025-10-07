@@ -1,15 +1,15 @@
 import { StudentRepository } from "@/repositories/StudentRepository";
 
 class DeleteStudentService {
+    constructor(private studentRepository: StudentRepository) {}
+
     async execute(id: number) {
-        const studentRepository = new StudentRepository();
-                
-        const student = await studentRepository.findById(id);
+        const student = await this.studentRepository.findById(id);
         if (!student) {
             return null;
         }
         
-        const deletedStudent = await studentRepository.delete(id);
+        const deletedStudent = await this.studentRepository.delete(id);
         return deletedStudent;
     }
 }

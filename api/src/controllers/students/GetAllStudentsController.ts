@@ -1,4 +1,5 @@
 import { GetAllStudentsService } from "@/services/student/GetAllStudentsService";
+import { StudentRepository } from "@/repositories/StudentRepository";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { PaginationHelper } from "@/utils/pagination";
 
@@ -7,7 +8,9 @@ class GetAllStudentsController {
         const parsedParams = PaginationHelper.parseQueryParams(req.query);
         const validatedParams = PaginationHelper.validateParams(parsedParams);
         
-        const result = await new GetAllStudentsService().execute(validatedParams);
+        const studentRepository = new StudentRepository();
+        const getAllStudentsService = new GetAllStudentsService(studentRepository);
+        const result = await getAllStudentsService.execute(validatedParams);
         
         return res.send({
             success: true,

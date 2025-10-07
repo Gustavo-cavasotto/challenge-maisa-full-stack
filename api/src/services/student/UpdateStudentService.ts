@@ -2,20 +2,20 @@ import { StudentRepository, UpdateStudentModel } from "@/repositories/StudentRep
 import { ConflictError, NotFoundError } from "@/errors/AppError";
 
 class UpdateStudentService {
+    constructor(private studentRepository: StudentRepository) {}
+
     async execute(data: UpdateStudentModel) {
-        const studentRepository = new StudentRepository();
-                
-        const student = await studentRepository.findById(data.id);
+        const student = await this.studentRepository.findById(data.id);
         if (!student) {
             throw new NotFoundError('Aluno não encontrado');
         }
         
-        const existingStudentByEmail = await studentRepository.findByEmail(data.email);
+        const existingStudentByEmail = await this.studentRepository.findByEmail(data.email);
         if (existingStudentByEmail && existingStudentByEmail.id !== data.id) {
             throw new ConflictError('Email já cadastrado por outro aluno');
         }
         
-        const updatedStudent = await studentRepository.update(data.id, data);
+        const updatedStudent = await this.studentRepository.update(data.id, data);
         return updatedStudent;
     }
 }

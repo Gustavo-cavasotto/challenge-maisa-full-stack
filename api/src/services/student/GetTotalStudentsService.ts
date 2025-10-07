@@ -1,8 +1,10 @@
 import { StudentRepository } from "@/repositories/StudentRepository";
 
 class GetTotalStudentsService {
+    constructor(private studentRepository: StudentRepository) {}
+
     async execute() {
-        const totalStudents = await new StudentRepository().getTotalStudents();
+        const totalStudents = await this.studentRepository.getTotalStudents();
         return totalStudents;
     }
 }

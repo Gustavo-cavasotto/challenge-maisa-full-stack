@@ -81,4 +81,9 @@ export class StudentRepository {
     const student = await db('students').where({ id }).first();
     return student;
   }
+
+  async getTotalStudents() {
+    const result = await db('students').where('is_active', true).count('id as count').first();
+    return Number(result?.count || 0);
+  }
 }

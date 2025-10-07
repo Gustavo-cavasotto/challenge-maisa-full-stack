@@ -1,12 +1,14 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { AuthService } from "@/services/admin/AuthService";
+import { AdminRepository } from "@/repositories/AdminRepository";
 import { loginModel } from "@/models/Admin";
 
 class AuthController {
     async handle(req: FastifyRequest, res: FastifyReply){
         const validatedData = loginModel.parse(req.body);
 
-        const authService = new AuthService();
+        const adminRepository = new AdminRepository();
+        const authService = new AuthService(adminRepository);
         const auth = await authService.execute({ email: validatedData.email, password: validatedData.password });
 
         return res.send({
