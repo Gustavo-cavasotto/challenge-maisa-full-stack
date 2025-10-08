@@ -1,6 +1,8 @@
 ## COMEÇANDO A RODAR O PROJETO - PASSOS:
 
-## **IMPORTANTE**: É necessário ter o node v22.18.0 para esse projeto
+## **IMPORTANTE**: É necessário ter :
+**Node.js 20.19.0 ou superior**
+**Node.js 22.12.0 ou superior (versão mais recente)**
 
 1 - Renomear o arquivo no diretório `api/.env.example` para `.env`
 
